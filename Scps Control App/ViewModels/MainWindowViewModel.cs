@@ -153,7 +153,7 @@ namespace Scps_Control_App.ViewModels
         }
 
 		[RelayCommand]
-		private async Task CyclePower()
+		private async Task StartPowerCycleSequence()
         {
             if (CycleDelay < MinCycleDelay)
             {
@@ -165,7 +165,7 @@ namespace Scps_Control_App.ViewModels
                 if (CycleButtonText == CycleText)
                 {
                     CycleButtonText = StopText;
-                    _ = StartCycle();
+                    _ = PowerCyclingSequence();
 				}
                 else
                 {
@@ -188,7 +188,7 @@ namespace Scps_Control_App.ViewModels
             }
 		}
 
-		private async Task StartCycle()
+		private async Task PowerCyclingSequence()
         {
 			while (CycleButtonText == StopText)
 			{
@@ -305,13 +305,23 @@ namespace Scps_Control_App.ViewModels
         {
             try
             {
-				if (Port1State == true)
-				{
-					await PowerOff();
+                bool? port1State = Port1State;
+				await GetStateAsync();
+                if (port1State != Port1State)
+                {
+					MessageBox.Show($"The app and power strip were out of sync. Did someone flip the port manually? " +
+                        $"The app and power strip are now in sync, no changes made to the port state.");
 				}
-				else if (Port1State == false)
-				{
-					await PowerOn();
+                else
+                {
+					if (Port1State == true)
+					{
+						await PowerOff();
+					}
+					else if (Port1State == false)
+					{
+						await PowerOn();
+					}
 				}
 			}
 			catch (Exception ex)
