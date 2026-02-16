@@ -47,7 +47,7 @@
             <WrapPanel IsEnabled="{Binding IsConnected}" HorizontalAlignment="Center" Margin="0,0,0,0">
                 <Border BorderBrush="Gray" BorderThickness="0.5" CornerRadius="5" Margin="0,3" Padding="5,0">
                     <WrapPanel>
-                        <Button Content="{Binding CycleButtonText}" Width="60" HorizontalAlignment="Left" Margin="0,20,0,10" Command="{Binding CyclePowerCommand}" Height="25" />
+                        <Button Content="{Binding CycleButtonText}" Width="60" HorizontalAlignment="Left" Margin="0,20,0,10" Command="{Binding StartPowerCycleSequenceCommand}" Height="25" />
                         <StackPanel Margin="10,4,0,0">
                             <Label Content="Delay (ms)" Padding="0" Margin="0,0,0,0"/>
                             <TextBox x:Name="CycleTextBox" Text="{Binding CycleDelay}" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MouseWheel="CycleTextBox_MouseWheel"/>
